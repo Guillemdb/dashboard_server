@@ -8,15 +8,13 @@ import time
 import requests
 import subprocess
 from sqlalchemy import create_engine
-from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
 hv.extension("bokeh")
 panel.extension()
 
 GRAPH_PLOT_PATH = "/dashboard_server/apps/graph_plot/graph_plot.ipynb"
-DATASOURCES_GUI_PATH = "/dashboard_server/apps/load_data/main.py"
+DATASOURCES_GUI_PATH = "/dashboard_server/apps/load_data/connect_to_db.py"
 
 
 def get_datasource(name: str):
@@ -28,18 +26,10 @@ def get_datasource(name: str):
 
 def parse_args(args):
     def parse_one(v):
-        if v == "None":
-            return None
         try:
-            v = float(v)
-            v = int(v) if int(v) == v else v
+            return eval(v)
         except:
             return v
-        try:
-            v = eval(v)
-        except:
-            return v
-        return v
 
     return {k: parse_one(v) for k, v in args.items()}
 
@@ -63,7 +53,6 @@ def scatter_3d(df, x, y, z, **args):
 
 
 @app.route("/embeddings", methods=["GET"])
-@cross_origin()
 def embeddings_page():
     args = dict(request.args)
     df = get_datasource(args["datasource"])
@@ -74,7 +63,6 @@ def embeddings_page():
 
 
 @app.route("/hvplot", methods=["GET"])
-@cross_origin()
 def hvplot_page():
     hv.extension("bokeh")
     df = get_datasource(request.args["datasource"])
@@ -86,7 +74,6 @@ def hvplot_page():
 
 
 @app.route("/scatter3d", methods=["GET"])
-@cross_origin()
 def scatter3d_page():
     df = get_datasource(request.args["datasource"])
     args = dict(request.args)
@@ -95,6 +82,7 @@ def scatter3d_page():
     pn = panel.panel(scatter_3d(df, **args))
     return panel_to_html(pn)
 
+
 def has_no_empty_params(rule):
     defaults = rule.defaults if rule.defaults is not None else ()
     arguments = rule.arguments if rule.arguments is not None else ()
@@ -102,7 +90,7 @@ def has_no_empty_params(rule):
 
 
 @app.route("/", methods=["GET"])
-def site_map():
+def print_site_map():
     links = []
     for rule in app.url_map.iter_rules():
         # Filter out rules we can't navigate to in a browser
@@ -110,12 +98,22 @@ def site_map():
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
             links.append((url, rule.endpoint))
-    # links is now a list of url, endpoint tuples
-
     msg = "Available Endpoints: <br> "
     for k, v in links:
         msg += "{} : {}<br>".format(k, v)
     return msg
+
+
+@app.route("/site_map", methods=["GET"])
+def get_site_map():
+    links = []
+    for rule in app.url_map.iter_rules():
+        # Filter out rules we can't navigate to in a browser
+        # and rules that require parameters
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            url = url_for(rule.endpoint, **(rule.defaults or {}))
+            links.append((url, rule.endpoint))
+    return {k: v for k, v in links}
 
 
 def _run_app(port, app_name, path):
@@ -136,7 +134,6 @@ def _run_app(port, app_name, path):
 
 
 @app.route("/run", methods=["GET"])
-@cross_origin()
 def run_app_page():
     args = dict(request.args)
     path = args["path"]
@@ -147,51 +144,36 @@ def run_app_page():
     time.sleep(args.get("sleep", 1))
     return iframe
 
-@app.route("/graph_plot", methods=["GET"])
-@cross_origin()
-def run_node():
-    #args = dict(request.args)
-    app_path = "http://localhost:5007"
-    try:
-        response = requests.get(app_path)
-        return response.content
-    except Exception as e:
-        raise e
 
-
-"""
 @app.route("/graph_plot", methods=["GET"])
-@cross_origin()
-def run_node():
-    args = dict(request.args)
-    path = GRAPH_PLOT_PATH
-    port = args["port"]
-    app_name = "graph_plot"
-    iframe = _run_app(port, app_name, path)
-    time.sleep(args.get("sleep", 1))
+def graph_plot():
+    app_path = "http://localhost:5007"  # Change to local/public ip to expose
+    iframe = (
+        '<iframe width="100%" height="100%" seamless frameBorder="0" scrolling="no"'
+        ' src="{}"></iframe>'
+    ).format(app_path)
     return iframe
 
 
-@app.route("/datasources", methods=["GET"])
-@cross_origin()
-def run_dataources_gui():
-    args = dict(request.args)
-    path = DATASOURCES_GUI_PATH
-    port = args.get("port", 5006)
-    app_name = "parquet2sqlGUI"
-    iframe = _run_app(port, app_name, path)
-    time.sleep(args.get("sleep", 1))
+@app.route("/database", methods=["GET"])
+def database_widget():
+    app_path = "http://localhost:5006"  # Change to local/public ip to expose
+    iframe = (
+        '<iframe width="100%" height="100%" seamless frameBorder="0" scrolling="no"'
+        ' src="{}"></iframe>'
+    ).format(app_path)
     return iframe
-"""
+
 
 if __name__ == "__main__":
     print(
-        "Opening single process Flask app with embedded Bokeh application on http://localhost:8000/"
+         "Opening single process Flask app with embedded Bokeh application on "
+         "http://localhost:8000/"
     )
     print()
     print("Multiple connections may block the Bokeh app in this configuration!")
     print('See "flask_gunicorn_embed.py" for one way to run multi-process')
     _run_app(port=5006, app_name="parquet2sqlGUI", path=DATASOURCES_GUI_PATH)
     _run_app(port=5007, app_name="graph_plot", path=GRAPH_PLOT_PATH)
-    app.run(port=8000)
+    app.run(port=8000, host="0.0.0.0")
 
