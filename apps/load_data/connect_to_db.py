@@ -16,6 +16,8 @@ try:
 except ImportError:
     pass
 
+WIDGET_WIDTH = 100
+
 
 class CommitTimeSeriesPreprocessor(param.Parameterized):
 
@@ -26,8 +28,8 @@ class CommitTimeSeriesPreprocessor(param.Parameterized):
     embeddings_file = widgets.FileInput(name="Embeddings")
     commits_file = widgets.FileInput(name="Commits")
     grouped_file = widgets.FileInput(name="Grouped series")
-    load_parquet_btn = widgets.Button(name="Load files")
-    to_sql_btn = widgets.Button(name="write to database.")
+    load_parquet_btn = widgets.Button(name="Load files", width=WIDGET_WIDTH)
+    to_sql_btn = widgets.Button(name="Write to DB.", width=WIDGET_WIDTH)
 
     def __init__(self, engine):
         super(CommitTimeSeriesPreprocessor, self).__init__()
@@ -169,13 +171,14 @@ class CommitTimeSeriesPreprocessor(param.Parameterized):
 
 
 class WriteParquet(param.Parameterized):
-    write_btn = widgets.Button(name="Write to DB")
-    read_btn = widgets.Button(name="Read DB table")
-    parquet_file = widgets.FileInput(name="Parquet file")
-    table = widgets.TextInput(name="DB table")
-    table_names = widgets.Select(name="DB tables")
+    write_btn = widgets.Button(name="Write to DB", width=WIDGET_WIDTH)
+    read_btn = widgets.Button(name="Read DB table", width=WIDGET_WIDTH)
+    parquet_file = widgets.FileInput(name="Parquet file", width=WIDGET_WIDTH)
+    table = widgets.TextInput(name="New table name", width=200)
+    table_names = widgets.Select(name="DB tables", width=200)
 
-    def __init__(self, engine):
+    def __init__(self, engine, *args, **kwargs):
+        super(WriteParquet, self).__init__(*args, **kwargs)
         self.engine = engine
         self.df = None
         self.db_df = None
@@ -183,11 +186,11 @@ class WriteParquet(param.Parameterized):
     @param.depends("parquet_file.value", watch=True)
     def load_parquet(self):
         f = io.BytesIO()
-        f.write(self.file_input.value)
+        f.write(self.parquet_file.value)
         f.seek(0)
         self.df = pd.read_parquet(f)
 
-    @param.depends("datasource_btn.clicks", watch=True)
+    @param.depends("read_btn.clicks", watch=True)
     def get_datasource(self):
         if self.data_source.value != "":
             sql = "SELECT * \nFROM {}\nLIMIT 10000".format(self.table.value)
@@ -203,14 +206,17 @@ class WriteParquet(param.Parameterized):
         if self.engine is None:
             return
         names = pd.read_sql("SELECT tablename FROM pg_catalog.pg_tables;", self.engine)
-        self.table_names.options = names.values.flatten().tolist()
+        self.table_names.options = list(sorted(names.values.flatten().tolist()))
 
     @param.depends("write_btn.clicks", watch=True)
     def write_parquet(self):
         if self.write_btn.clicks > 0:
-            self.load_parquet()
-            self.df.to_sql(self.table.value, self.engine)
-            return panel.pane.Str("Success")
+            try:
+                self.load_parquet()
+                self.df.to_sql(self.table.value, self.engine)
+                return panel.pane.Str("Success")
+            except Exception as e:
+                return panel.pane.Str(str(e))
         return panel.pane.Str("")
 
     @param.depends("read_btn.clicks", watch=True)
@@ -228,17 +234,17 @@ class WriteParquet(param.Parameterized):
                 panel.Row(panel.pane.Markdown("Parquet file"), self.parquet_file),
                 panel.Row(self.table),
                 panel.Row(self.read_btn, self.write_btn),
-                panel.Row(self.write_parquet),
+
             ),
-            panel.Column(self.read_table),
+            panel.Column(self.read_table, self.write_parquet),
         )
 
 
 class Dashboard(param.Parameterized):
     db_manager = DataBaseManager()
+    parquet = WriteParquet
 
     def __init__(self):
-
         self.parquet = WriteParquet(self.db_manager)
         self.cts_loader = CommitTimeSeriesPreprocessor(self.db_manager)
         self.parquet.write_btn.disabled = True
@@ -253,11 +259,17 @@ class Dashboard(param.Parameterized):
             self.parquet.get_table_names()
             self.cts_loader.engine = self.db_manager.engine
 
+    @param.depends("parquet.write_btn.clicks", watch=True)
+    def write_clicked(self):
+        if self.parquet.engine is not None and self.parquet.write_btn.clicks > 0:
+            self.parquet.get_table_names()
+
     def panel(self):
         return panel.Tabs(
             ("Database", self.db_manager.panel()),
             ("eee-cts", self.cts_loader.panel()),
-            ("Parquet2sql", panel.Column(self.parquet.panel(), self.update_engine)),
+            ("Parquet2sql", panel.Column(self.parquet.panel(), self.update_engine,
+                                         self.write_clicked)),
         )
 
 

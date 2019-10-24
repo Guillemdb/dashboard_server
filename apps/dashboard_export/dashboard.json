@@ -1,0 +1,365 @@
+{
+    "dashboards": [
+        {
+            "__Dashboard__": {
+                "css": "",
+                "dashboard_title": "commits",
+                "description": null,
+                "json_metadata": "{\"remote_id\": \"ac6457fa-2cc1-481c-9f33-aa2ea66aeb3c\", \"filter_immune_slices\": [], \"timed_refresh_immune_slices\": [], \"filter_immune_slice_fields\": {}, \"expanded_slices\": {}, \"refresh_frequency\": 0, \"default_filters\": \"{}\"}",
+                "position_json": "{\"CHART-Qy2TqPVlkX\":{\"children\":[],\"id\":\"CHART-Qy2TqPVlkX\",\"meta\":{\"chartId\":44,\"height\":85,\"sliceName\":\"Graph Plot \",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-R-JPUzbY_\"],\"type\":\"CHART\"},\"CHART-YvhgTPV3LJ\":{\"children\":[],\"id\":\"CHART-YvhgTPV3LJ\",\"meta\":{\"chartId\":31,\"height\":36,\"sliceName\":\"Developer commits\",\"width\":10},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-4-VlBY_w9\"],\"type\":\"CHART\"},\"CHART-hth9c0F7A0\":{\"children\":[],\"id\":\"CHART-hth9c0F7A0\",\"meta\":{\"chartId\":32,\"height\":50,\"sliceName\":\"test\",\"width\":5},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-tdKSdboRt\"],\"type\":\"CHART\"},\"CHART-v3v-f59AgP\":{\"children\":[],\"id\":\"CHART-v3v-f59AgP\",\"meta\":{\"chartId\":33,\"height\":49,\"sliceName\":\"Top contributors\",\"width\":5},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-tdKSdboRt\"],\"type\":\"CHART\"},\"CHART-zxUdm3mrDe\":{\"children\":[],\"id\":\"CHART-zxUdm3mrDe\",\"meta\":{\"chartId\":43,\"height\":85,\"sliceName\":\"scatter 3d\",\"width\":6},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-R-JPUzbY_\"],\"type\":\"CHART\"},\"DASHBOARD_VERSION_KEY\":\"v2\",\"GRID_ID\":{\"children\":[\"ROW-tdKSdboRt\",\"ROW-4-VlBY_w9\",\"ROW-R-JPUzbY_\"],\"id\":\"GRID_ID\",\"parents\":[\"ROOT_ID\"],\"type\":\"GRID\"},\"HEADER_ID\":{\"id\":\"HEADER_ID\",\"meta\":{\"text\":\"commits\"},\"type\":\"HEADER\"},\"ROOT_ID\":{\"children\":[\"GRID_ID\"],\"id\":\"ROOT_ID\",\"type\":\"ROOT\"},\"ROW-4-VlBY_w9\":{\"children\":[\"CHART-YvhgTPV3LJ\"],\"id\":\"ROW-4-VlBY_w9\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-R-JPUzbY_\":{\"children\":[\"CHART-zxUdm3mrDe\",\"CHART-Qy2TqPVlkX\"],\"id\":\"ROW-R-JPUzbY_\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-tdKSdboRt\":{\"children\":[\"CHART-v3v-f59AgP\",\"CHART-hth9c0F7A0\"],\"id\":\"ROW-tdKSdboRt\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"}}",
+                "slices": [
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "commit-series",
+                            "datasource_type": "table",
+                            "id": 31,
+                            "params": "{\"adhoc_filters\": [], \"annotation_layers\": [], \"bottom_margin\": \"auto\", \"color_scheme\": \"SUPERSET_DEFAULT\", \"comparison_type\": \"values\", \"contribution\": false, \"datasource\": \"41__table\", \"granularity_sqla\": \"date_ix\", \"groupby\": [\"name\"], \"label_colors\": {}, \"left_margin\": \"auto\", \"line_interpolation\": \"linear\", \"metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"commits\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 157, \"is_dttm\": false, \"optionName\": \"_col_commits\", \"python_date_format\": null, \"type\": \"DOUBLE PRECISION\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": true, \"hasCustomLabel\": false, \"label\": \"SUM(commits)\", \"optionName\": \"metric_vhiberlmlg_6ouas2z7chd\", \"sqlExpression\": null}], \"order_desc\": true, \"resample_method\": null, \"resample_rule\": null, \"rich_tooltip\": true, \"rolling_type\": \"None\", \"row_limit\": 50000, \"send_time_range\": false, \"show_brush\": \"auto\", \"show_legend\": true, \"show_markers\": false, \"slice_id\": 31, \"time_grain_sqla\": null, \"time_range\": \"No filter\", \"timeseries_limit_metric\": null, \"url_params\": {}, \"viz_type\": \"line\", \"x_axis_format\": \"smart_date\", \"x_axis_label\": \"\", \"x_axis_showminmax\": false, \"x_ticks_layout\": \"auto\", \"y_axis_bounds\": [null, null], \"y_axis_format\": \"SMART_NUMBER\", \"y_axis_label\": \"\", \"y_axis_showminmax\": false, \"y_log_scale\": false, \"remote_id\": \"5fc220d4-9e96-4d1b-b92e-e622089e3294\", \"datasource_name\": \"commit-series\", \"schema\": null, \"database_name\": \"metadata\"}",
+                            "slice_name": "Developer commits",
+                            "viz_type": "line"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "developer_embeddings",
+                            "datasource_type": "table",
+                            "id": 44,
+                            "params": "{\"datasource\": \"44__table\", \"granularity_sqla\": null, \"slice_id\": 44, \"time_grain_sqla\": \"P1D\", \"time_range\": \"Last week\", \"url\": \"http://localhost:8000/graph_plot?port=6102\", \"url_params\": {}, \"viz_type\": \"iframe\", \"remote_id\": \"8456e08a-0c13-420f-b501-07104e8b8353\", \"datasource_name\": \"developer_embeddings\", \"schema\": null, \"database_name\": \"main\"}",
+                            "slice_name": "Graph Plot ",
+                            "viz_type": "iframe"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "commit-series",
+                            "datasource_type": "table",
+                            "id": 33,
+                            "params": "{\"adhoc_filters\": [], \"bar_stacked\": false, \"bottom_margin\": 100, \"color_scheme\": \"SUPERSET_DEFAULT\", \"columns\": [], \"contribution\": false, \"datasource\": \"41__table\", \"granularity_sqla\": \"date_ix\", \"groupby\": [\"name\"], \"label_colors\": {\"23040076+greenkeeper[bot]@users.noreply.github.com\": \"#a438e7\", \"SUM(commits)\": \"#591085\", \"alexander bezzubov\": \"#bc6ded\", \"bzz@users.noreply.github.com\": \"#d66600\", \"carlos martin\": \"#f68b0c\", \"carlosms@users.noreply.github.com\": \"#f89c30\", \"david pordomingo@github.com/bblfsh/web\": \"#f9ae56\", \"denys smirnov\": \"#006853\", \"dependabot[bot]@users.noreply.github.com\": \"#009b7c\", \"deploy@travis-ci.org\": \"#00b491\", \"developer\": \"rgba(135, 25, 203, 1)\", \"efx@users.noreply.github.com\": \"#00c8a1\", \"eli flanagan\": \"#591085\", \"greenkeeper[bot]@users.noreply.github.com\": \"rgba(135, 25, 203, 1)\", \"greenkeeperio-bot\": \"#a438e7\", \"jordan j. henkel\": \"#bc6ded\", \"juanjo alvarez\": \"#d66600\", \"konstantin slavnov\": \"#f68b0c\", \"kuba--\": \"#f89c30\", \"kuba--@users.noreply.github.com\": \"#f9ae56\", \"lou marvin caraig\": \"#006853\", \"lwsanty\": \"#009b7c\", \"m. j. fromberger\": \"#00b491\", \"maartje eyskens\": \"#00c8a1\", \"maxim sukharev\": \"#591085\", \"ncordon\": \"rgba(135, 25, 203, 1)\", \"prashik-s\": \"#a438e7\", \"tsolakou\": \"#bc6ded\", \"vadim markovtsev\": \"#d66600\", \"wojciech jab\\u0142onski\": \"#f68b0c\"}, \"metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"commits\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 157, \"is_dttm\": false, \"optionName\": \"_col_commits\", \"python_date_format\": null, \"type\": \"DOUBLE PRECISION\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": true, \"hasCustomLabel\": false, \"label\": \"SUM(commits)\", \"optionName\": \"metric_jiizjujhf8g_4g34q2wofaf\", \"sqlExpression\": null}], \"order_bars\": false, \"reduce_x_ticks\": false, \"row_limit\": 10, \"show_bar_value\": false, \"show_controls\": false, \"show_legend\": false, \"slice_id\": 33, \"time_grain_sqla\": \"P1D\", \"time_range\": \"No filter\", \"url_params\": {}, \"viz_type\": \"dist_bar\", \"x_axis_label\": \"Developers\", \"x_ticks_layout\": \"auto\", \"y_axis_format\": \"SMART_NUMBER\", \"y_axis_label\": \"Total commits\", \"remote_id\": \"5b15c6ee-b6af-448d-8f6a-6290592ac065\", \"datasource_name\": \"commit-series\", \"schema\": null, \"database_name\": \"metadata\"}",
+                            "slice_name": "Top contributors",
+                            "viz_type": "dist_bar"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "developer_embeddings",
+                            "datasource_type": "table",
+                            "id": 43,
+                            "params": "{\"datasource\": \"44__table\", \"granularity_sqla\": null, \"slice_id\": 43, \"time_grain_sqla\": \"P1D\", \"time_range\": \"Last week\", \"url\": \"http://localhost:8000/scatter3d?datasource=developer_embeddings&x=x_0&y=x_1&z=cluster&width=900&height=600&color=cluster&title=My%20scatter%203D\", \"url_params\": {}, \"viz_type\": \"iframe\", \"remote_id\": \"0a1109b6-c1fa-46ae-a960-345f2b6b1cf5\", \"datasource_name\": \"developer_embeddings\", \"schema\": null, \"database_name\": \"main\"}",
+                            "slice_name": "scatter 3d",
+                            "viz_type": "iframe"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "commit-series",
+                            "datasource_type": "table",
+                            "id": 32,
+                            "params": "{\"adhoc_filters\": [], \"annotation_layers\": [], \"bottom_margin\": \"auto\", \"color_scheme\": \"SUPERSET_DEFAULT\", \"comparison_type\": \"values\", \"contribution\": false, \"datasource\": \"41__table\", \"granularity_sqla\": \"date_ix\", \"groupby\": [\"type\"], \"label_colors\": {}, \"left_margin\": \"auto\", \"line_interpolation\": \"linear\", \"metrics\": [{\"aggregate\": \"SUM\", \"column\": {\"column_name\": \"commits\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 157, \"is_dttm\": false, \"optionName\": \"_col_commits\", \"python_date_format\": null, \"type\": \"DOUBLE PRECISION\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"fromFormData\": true, \"hasCustomLabel\": false, \"label\": \"SUM(commits)\", \"optionName\": \"metric_vhiberlmlg_6ouas2z7chd\", \"sqlExpression\": null}], \"order_desc\": true, \"resample_method\": null, \"resample_rule\": null, \"rich_tooltip\": true, \"rolling_type\": \"None\", \"row_limit\": \"1500000\", \"send_time_range\": false, \"show_brush\": \"auto\", \"show_legend\": true, \"show_markers\": false, \"time_grain_sqla\": null, \"time_range\": \"No filter\", \"timeseries_limit_metric\": null, \"url_params\": {}, \"viz_type\": \"line\", \"x_axis_format\": \"smart_date\", \"x_axis_label\": \"\", \"x_axis_showminmax\": false, \"x_ticks_layout\": \"auto\", \"y_axis_bounds\": [null, null], \"y_axis_format\": \"SMART_NUMBER\", \"y_axis_label\": \"\", \"y_axis_showminmax\": false, \"y_log_scale\": false, \"remote_id\": \"e21b257e-942f-45e5-b506-0f9de14b9a2f\", \"datasource_name\": \"commit-series\", \"schema\": null, \"database_name\": \"metadata\"}",
+                            "slice_name": "test",
+                            "viz_type": "line"
+                        }
+                    }
+                ],
+                "slug": null
+            }
+        }
+    ],
+    "datasources": [
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "commits",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-08T11:10:41"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 157,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 41,
+                            "type": "DOUBLE PRECISION",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "date_ix",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-08T11:10:41"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 155,
+                            "is_active": true,
+                            "is_dttm": true,
+                            "python_date_format": null,
+                            "table_id": 41,
+                            "type": "DATETIME",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "name",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-08T11:10:41"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 156,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 41,
+                            "type": "TEXT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "type",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-08T11:10:41"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 158,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 41,
+                            "type": "TEXT",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 2,
+                "default_endpoint": null,
+                "description": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "is_sqllab_view": false,
+                "main_dttm_col": "date_ix",
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-08T11:10:41"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "COUNT(*)",
+                            "id": 42,
+                            "is_restricted": false,
+                            "metric_name": "count",
+                            "metric_type": "count",
+                            "table_id": 41,
+                            "verbose_name": "COUNT(*)",
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"database_name\": \"metadata\"}",
+                "schema": null,
+                "sql": null,
+                "table_name": "commit-series",
+                "template_params": null
+            }
+        },
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "cluster",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-10T17:49:12"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 175,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 44,
+                            "type": "BIGINT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "index",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-10T17:49:12"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 170,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 44,
+                            "type": "TEXT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "seriated_index",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-10T17:49:12"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 174,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 44,
+                            "type": "REAL",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "type",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-10T17:49:12"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 173,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 44,
+                            "type": "TEXT",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "x_0",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-10T17:49:12"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 171,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 44,
+                            "type": "REAL",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "column_name": "x_1",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-10T17:49:12"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 172,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 44,
+                            "type": "REAL",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 3,
+                "default_endpoint": null,
+                "description": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "is_sqllab_view": false,
+                "main_dttm_col": null,
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2019-10-10T17:49:12"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "COUNT(*)",
+                            "id": 45,
+                            "is_restricted": false,
+                            "metric_name": "count",
+                            "metric_type": "count",
+                            "table_id": 44,
+                            "verbose_name": "COUNT(*)",
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"database_name\": \"main\"}",
+                "schema": null,
+                "sql": null,
+                "table_name": "developer_embeddings",
+                "template_params": null
+            }
+        }
+    ]
+}

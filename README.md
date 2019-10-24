@@ -21,7 +21,7 @@ changing the background color are not easy tasks.
 - Complex interactivity is very tricky: You can spend a day trying to debug while your filter is failing on some of your plots.
 
 - Superset cannot run custom python code to filter the queried data before plotting it: Running a 
-pretrained model on the queried data and plotting its predictions is not currently possible to do with Superset.
+pre-trained model on the queried data and plotting its predictions is not currently possible to do with Superset.
 
 When using `dashboards_extensions`, we will be able to run arbitrary python code on a separate server 
 to create any kind of visualization. This visualization will be embedded in a `sourced-ui` dashboard using an **iframe**. 
@@ -34,6 +34,17 @@ This code is ready to be embedded in an iframe so it can be displayed in a `sour
 
 <img src="images/dashboard_extensions.png" width="800" height="350" />
 
+### Features
+
+- Runs in a separate docker container that can be added easily to `docker-compose`.
+- Very easy to integrate with `sourced-ui` and the current demo environment.
+- Provides any custom python functionality that could be needed.
+- Allows to expose python visualizations as html files.
+- Easy to scale.
+- Allows to create interactive plots and control interfaces.
+
+### Get started
+You can find a detailed tutorial on how to get started in the [demo](markdown/demo.md) section.
 
 ### Loading plots from superset
 
@@ -69,22 +80,18 @@ Let's break down the url:
     * column `cluster` -> **z** coordinates
 - `width=900&height=600&color=cluster&title=My%20scatter%203D`: It is also possible to specify visual properties for the plot.
 
+# Running the proof of concept
 
-### Features
-
-- Runs in a separate docker container that can be added easily to `docker-compose`.
-- Very easy to integrate with `sourced-ui` and the current demo environment.
-- Provides any custom python functionality that could be needed.
-- Allows to expose python visualizations as html files.
-- Easy to scale.
-- Allows to create interactive plots and control interfaces.
+Building the container:
+`docker build -t dashboard_server .`
+Running only one app as a naive bokeh server:
+`docker run --rm --network="host" -p 5006:5006 -it dashboard_server:latest panel serve dashboard_server/apps/load_data/main.py`
+Running Dashboard server:
+`docker run --rm --network="host" -p 5006:5006 -p 8000:8000 -it dashboard_server:latest python3  dashboard_server/dashboard_server/server.py`
 
 ### Gallery
-
+![](images/app_inside_dashboard.png)
 ![](images/dashboard_embeddings.png)
-
 ![](images/custom_dashboards.png)
-
 ![](images/on_demand_extensions.png)
-
 ![](images/interactive_app.png)

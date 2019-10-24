@@ -3,18 +3,20 @@ import panel
 import param
 from sqlalchemy import create_engine
 
+WIDGET_WIDTH = 100
+
 
 class DataBaseManager(param.Parameterized):
     file_input = widgets.FileInput(name="Parquet file")
-    dbtype = widgets.TextInput(name="Database type", value="postgresql")
-    user = widgets.TextInput(name="Username", value="superset")
-    password = widgets.TextInput(name="Password", value="superset")
-    host = widgets.TextInput(name="Host", value="localhost")
-    endpoint = widgets.TextInput(name="Host", value="superset")
-    port = widgets.LiteralInput(name="Port", value=5432)
-    connect_btn = widgets.Button(name="Connect to DB")
-    data_source = widgets.TextInput(name="Table")
-    datasource_btn = widgets.Button(name="Query table")
+    dbtype = widgets.TextInput(name="Database type", value="postgresql", width=WIDGET_WIDTH)
+    user = widgets.TextInput(name="Username", value="superset", width=WIDGET_WIDTH)
+    password = widgets.TextInput(name="Password", value="superset", width=WIDGET_WIDTH)
+    host = widgets.TextInput(name="Host", value="localhost", width=WIDGET_WIDTH)
+    endpoint = widgets.TextInput(name="Host", value="superset", width=WIDGET_WIDTH)
+    port = widgets.LiteralInput(name="Port", value=5432, width=WIDGET_WIDTH)
+    data_source = widgets.TextInput(name="Table Name", width=WIDGET_WIDTH)
+    connect_btn = widgets.Button(name="Connect to DB", width=WIDGET_WIDTH)
+    datasource_btn = widgets.Button(name="Query table", width=WIDGET_WIDTH)
 
     def __init__(self):
         super().__init__()
@@ -23,8 +25,12 @@ class DataBaseManager(param.Parameterized):
         self.engine = None
         self._connected = False
 
-    @property
-    def url(self):
+    @param.depends("dbtype.value", "user.value", "password.value",
+                   "host.value", "port.value", "endpoint.value")
+    def _url(self):
+        return panel.pane.Str(self._get_url())
+
+    def _get_url(self):
         url = "{}://{}:{}@{}:{}/{}".format(
             self.dbtype.value,
             self.user.value,
@@ -35,11 +41,15 @@ class DataBaseManager(param.Parameterized):
         )
         return url
 
+    @property
+    def url(self):
+        return self._get_url()
+
     @param.depends("connect_btn.clicks", watch=True)
     def connect_to_db(self):
-        msg = panel.pane.Str("Connected to \n{}".format(self.url))
+        msg = panel.Column(panel.pane.Str("Connected to"), self._url)
         if self.connect_btn.clicks == 0:
-            return panel.pane.Str("Ready to connect to \n{}".format(self.url))
+            return panel.Column(panel.pane.Str("Ready to connect to"), self._url)
         if self._connected:
             return msg
         try:
@@ -49,7 +59,7 @@ class DataBaseManager(param.Parameterized):
             return msg
         except Exception as e:
             self._connected = False
-            return panel.pane.Str("Error connecting to database \n{}".format(self.url))
+            return panel.Column(panel.pane.Str("Error connecting to"), self._url)
 
     def panel(self):
         widgets = panel.Row(
