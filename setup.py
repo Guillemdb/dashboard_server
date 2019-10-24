@@ -5,7 +5,7 @@ import os.path
 from setuptools import find_packages, setup
 
 dashboard_server = SourceFileLoader(
-    "dashboard_server", "./dashboard_server/__init__.py",
+    "dashboard_server", "./dashboard_server/__init__.py"
 ).load_module()
 
 with io.open(os.path.join(os.path.dirname(__file__), "README.md"), encoding="utf-8") as f:
@@ -32,19 +32,27 @@ setup(
     download_url="https://github.com/Guillemdb/dashboard_server",
     packages=find_packages(exclude=exclude_packages),
     keywords=["dashboard_server"],
-    install_requires=["numpy>=1.16.2,<2",
-                      "packaging>=19.0",
-                      "pandas>=0.23.4,<1",
-                      "panel",
-                      "holoviews",
-                      "bokeh",
-                      "flask",
-                      "hvplot",
-                      "plotly",
-                      "matplotlib",
-                      "scipy",
-                      "networkx",
-                      ],
+    install_requires=[
+        "numpy",
+        "packaging",
+        "pandas",
+        "panel",
+        "holoviews",
+        "bokeh",
+        "flask",
+        "hvplot",
+        "plotly",
+        "matplotlib",
+        "scipy",
+        "networkx",
+        "sqlalchemy",
+        "requests",
+        "flask-cors",
+        "jupyter",
+        "psycopg2-binary",
+        "pyarrow",
+        "scikit-learn",
+    ],
     package_data=package_data,
     python_requires=">=3.5",
     classifiers=[
