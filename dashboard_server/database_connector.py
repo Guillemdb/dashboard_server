@@ -1,3 +1,4 @@
+import pandas as pd
 from panel import widgets
 import panel
 import param
@@ -25,6 +26,10 @@ class DataBaseManager(param.Parameterized):
         self.engine = None
         self._connected = False
 
+    @property
+    def connected(self) -> bool:
+        return self._connected
+
     @param.depends("dbtype.value", "user.value", "password.value",
                    "host.value", "port.value", "endpoint.value")
     def _url(self):
@@ -40,6 +45,16 @@ class DataBaseManager(param.Parameterized):
             self.endpoint.value,
         )
         return url
+
+    def get_table_names(self):
+        if self.engine is None:
+            return
+        names = pd.read_sql("SELECT tablename FROM pg_catalog.pg_tables;", self.engine)
+        return names.values.flatten().tolist()
+
+    def get_column_names(self, table):
+        sql = "SELECT column_name FROM information_schema.COLUMNS WHERE TABLE_NAME = '%s';" % table
+        return pd.read_sql(sql, self.engine).values.flatten().tolist()
 
     @property
     def url(self):
@@ -62,9 +77,9 @@ class DataBaseManager(param.Parameterized):
             return panel.Column(panel.pane.Str("Error connecting to"), self._url)
 
     def panel(self):
-        widgets = panel.Row(
+        db_widgets = panel.Row(
             panel.Column(self.dbtype, self.host, self.port),
             panel.Column(self.user, self.password, self.endpoint),
             panel.Column(self.connect_to_db, self.connect_btn),
         )
-        return panel.Column(panel.pane.Markdown("## Connect to superset database"), widgets)
+        return panel.Column(panel.pane.Markdown("## Connect to superset database"), db_widgets)

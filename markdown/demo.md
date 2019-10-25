@@ -16,7 +16,7 @@ In this tutorial we will forget about superset and run the tutorial using a web 
 Let's setup the Docker container of the demo, and run dashboard_server:
 
 1. `docker build -t dashboard_server .`
-2. `docker run --rm --network="host" -p 5006:5006 -p 8000:8000 -it dashboard_server:latest python3  dashboard_server/dashboard_server/server.py`
+2. `docker run --rm --network="host" -p 8000:8000  -p 8001:8001 -p 8002:8002 -p 8003:8003 -it dashboard_server:latest python3  dashboard_server/dashboard_server/server.py`
 
 ### Check that everything has been install properly
 
@@ -74,7 +74,7 @@ One of the apps running on the server allows to visualize the similarities among
 - Each node is colored according to its hdbscan clustering.
 
 You can access the plot in [http://localhost:8000/graph_plot](http://localhost:8000/graph_plot)
- as a separate enfpoint in the application, or through [http://localhost:5007/graph_plot](http://localhost:5007/graph_plot)
+ as a separate enfpoint in the application, or through [http://localhost:8003/graph_plot](http://localhost:8003/graph_plot)
 which is the bokeh server where the app is exposed.
 
 | **Graph plot**               | **Interactive selection**|
@@ -86,3 +86,47 @@ If you hover over the nodes, the information bout the series it represents will 
  all the non-selected nodes fade.
 
 
+# Creating visualizations
+
+It is very easy to expose visualization libraries as endpoints to the server. `dashboard_server` exposes a REST API
+that returns plots in HTML format ready to be embedded. Passing the url provided to an iframe will allow to display an static html plot.
+
+The format of the urls is a GET request:
+
+`http://localhost:8000/endpoint?datasource=superset_table&param_1=val1&param_2=val_2`
+
+To test the result of different queries easier, a graphical user interface to the plots is provided.
+  
+Go to [`http://localhost:8002/plot_manager`](http://localhost:8002/plot_manager) and click on **Connect to DB** to populate the widgets.
+
+ <table>
+     <tr>
+        <th> <img src="../images/plot_manager_empty.png" width="450" height="350"/></th>
+        <th> <img src="../images/plot_manager.png" width="450" height="350"/></th>
+     </tr><
+ </table>
+
+## Plotting with [`hvplot`](https://hvplot.pyviz.org/)
+
+The server provides a rest API that offers an interface to `hv.pandas.plot` for any of the tables of the superset database.
+
+A GET request to `/hvplot?datasource=target` will return the holoviews plot for the
+ target database in html format ready to be embedded.
+ 
+Change the widgets until they match the image. That will create the following url:
+
+[`http://localhost:8000/hvplot?datasource=developer_embeddings&x=x_0&y=x_1&color=cluster&&kind=scatter&cmap=viridis&line_color=black`](http://localhost:8000/hvplot?datasource=developer_embeddings&x=x_0&y=x_1&color=cluster&&kind=scatter&cmap=viridis&line_color=black)
+ 
+| **Plot GUI**               | **Resulting plot**|
+|----------------------------|--------------------------|
+| <img src="../images/plot_manager_scatter.png" width="450" height="450"/> | <img src="../images/scatter_embedded.png" width="450" height="250"/>|
+
+## [Scatter3D](http://holoviews.org/reference/elements/matplotlib/Scatter3D.html)
+    
+Changing only a few widgets you can test the `Scatter3D` interface that is accessible at `/scatter3d`.: 
+
+[`http://localhost:8000/scatter3d?datasource=developer_embeddings&x=x_0&y=x_1&z=cluster&color=cluster&&title=Scatter%203D%20demo`](http://localhost:8000/scatter3d?datasource=developer_embeddings&x=x_0&y=x_1&z=cluster&color=cluster&&title=Scatter%203D%20demo)
+
+| **Plot GUI**               | **Resulting plot**|
+|----------------------------|--------------------------|
+| <img src="../images/scatter_3d_manager.png" width="450" height="550"/> | <img src="../images/scatter_3d_embedded.png" width="450" height="450"/>|

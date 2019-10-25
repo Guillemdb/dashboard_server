@@ -5,6 +5,9 @@
 
 This is a proof of concept for extending the functionality of sourced-ui dashboards as a separate service.
 
+## Get started
+You can find a detailed tutorial on how to get started in the [demo](markdown/demo.md) section.
+
 ## Why this project
 
 When trying to integrate new `sourced extensions` to `sourced-ui` we often come across the limitations that
@@ -42,9 +45,6 @@ This code is ready to be embedded in an iframe so it can be displayed in a `sour
 - Allows to expose python visualizations as html files.
 - Easy to scale.
 - Allows to create interactive plots and control interfaces.
-
-### Get started
-You can find a detailed tutorial on how to get started in the [demo](markdown/demo.md) section.
 
 ### Loading plots from superset
 
@@ -84,10 +84,10 @@ Let's break down the url:
 
 Building the container:
 `docker build -t dashboard_server .`
-Running only one app as a naive bokeh server:
-`docker run --rm --network="host" -p 5006:5006 -it dashboard_server:latest panel serve dashboard_server/apps/load_data/main.py`
+Running only one app as a simple bokeh server:
+`docker run --rm --network="host" -p 5006:5006 -it dashboard_server:latest panel serve dashboard_server/apps/load_data/connect_to_db.py`
 Running Dashboard server:
-`docker run --rm --network="host" -p 5006:5006 -p 8000:8000 -it dashboard_server:latest python3  dashboard_server/dashboard_server/server.py`
+`docker run --rm --network="host" -p 8000:8000  -p 8001:8001 -p 8002:8002 -p 8003:8003 -it dashboard_server:latest python3  dashboard_server/dashboard_server/server.py`
 
 ### Gallery
 ![](images/app_inside_dashboard.png)

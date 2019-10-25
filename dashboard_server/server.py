@@ -15,6 +15,7 @@ panel.extension()
 
 GRAPH_PLOT_PATH = "/dashboard_server/apps/graph_plot/graph_plot.ipynb"
 DATASOURCES_GUI_PATH = "/dashboard_server/apps/load_data/connect_to_db.py"
+PLOT_MANAGER_PATH = "/dashboard_server/apps/plot_manager/plot_manager.py"
 
 
 def get_datasource(name: str):
@@ -173,7 +174,8 @@ if __name__ == "__main__":
     print()
     print("Multiple connections may block the Bokeh app in this configuration!")
     print('See "flask_gunicorn_embed.py" for one way to run multi-process')
-    _run_app(port=5006, app_name="parquet2sqlGUI", path=DATASOURCES_GUI_PATH)
-    _run_app(port=5007, app_name="graph_plot", path=GRAPH_PLOT_PATH)
+    _run_app(port=8001, app_name="parquet2sqlGUI", path=DATASOURCES_GUI_PATH)
+    _run_app(port=8002, app_name="parquet2sqlGUI", path=PLOT_MANAGER_PATH)
+    _run_app(port=8003, app_name="graph_plot", path=GRAPH_PLOT_PATH)
     app.run(port=8000, host="0.0.0.0")
 
