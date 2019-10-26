@@ -174,7 +174,7 @@ if __name__ == "__main__":
     print()
     print("Multiple connections may block the Bokeh app in this configuration!")
     print('See "flask_gunicorn_embed.py" for one way to run multi-process')
-    _run_app(port=8001, app_name="parquet2sqlGUI", path=DATASOURCES_GUI_PATH)
+    _run_app(port=8001, app_name="data_loader", path=DATASOURCES_GUI_PATH)
     _run_app(port=8002, app_name="parquet2sqlGUI", path=PLOT_MANAGER_PATH)
     _run_app(port=8003, app_name="graph_plot", path=GRAPH_PLOT_PATH)
     app.run(port=8000, host="0.0.0.0")

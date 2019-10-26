@@ -192,7 +192,7 @@ class WriteParquet(param.Parameterized):
 
     @param.depends("read_btn.clicks", watch=True)
     def get_datasource(self):
-        if self.data_source.value != "":
+        if self.table.value != "":
             sql = "SELECT * \nFROM {}\nLIMIT 10000".format(self.table.value)
             self.df = self.sql(sql)
         table = self.table.value if self.table.value != "" else "None"
