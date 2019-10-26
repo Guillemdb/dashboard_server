@@ -2,10 +2,11 @@
 
 ### Requirements
 
-This demo runs in its own separate docker container, and all the required data to run them is provided
-in the repository. However, we will require a mysql database to running on the system.
+This demo runs in its own separate docker container, and all the required data to run it is provided
+in the repository. However, we will require a mysql database to be running on the system.
 
-By default, it will connect to the [`sourced-ui`](https://github.com/src-d/sourced-ui) superset mysql database that [`sourced`](https://sourced.tech/get-started/) provides on the following url:
+By default, it will connect to the [`sourced-ui`](https://github.com/src-d/sourced-ui)
+ superset mysql database that [`sourced`](https://sourced.tech/get-started/) provides on the following url:
 
 `postgresql://superset:superset@localhost:5432/superset`
 
@@ -30,15 +31,15 @@ Please note that this demo only runs on http, not https for the sake of simplici
 
 
 
-We will load the data provided as parquet files and save them into the superset parquet using a GUI that runs on a bokeh server.
+We will load the data provided as parquet files and save them into the superset database using a GUI that runs on a bokeh server.
 
 After connecting to [http://localhost:8000/database](http://localhost:8000/database) you should see the following app:
 
 
 <img src="../images/database_widget.png" width="600" height="250" />
 
-Select the your databse configuration and click connect to DB. If the connection is successful a the message will change to 
-`Connected to db-url`, and the buttons on the parquet2sql file will be enabled.
+Select the your databse configuration and click connect to DB. If the connection is successful the message will change to 
+`Connected to db-url`, and the buttons on the parquet2sql tab will be enabled.
 
 You will need to load the following files, and save them to a new table in the database:
 
@@ -64,7 +65,7 @@ by selecting the table in the dropdown and clicking **Read DB table**.
 
 ## Visualizing the graph of developer similarities
 
-One of the apps running on the server allows to visualize the similarities among thevelopers
+One of the apps running on the server allows to visualize the similarities among developers
  using graphs. The represented chart has been constructed the following way:
  
 - Each of our commit series will represent a node.
@@ -72,19 +73,19 @@ One of the apps running on the server allows to visualize the similarities among
  in the embedding space.
 - The weight of each edge in the graph is proportional to the distance to every other node.
 - Each node is colored according to its hdbscan clustering.
+- The size of each node is proportional to its betweenness centrality.
 
 You can access the plot in [http://localhost:8000/graph_plot](http://localhost:8000/graph_plot)
- as a separate enfpoint in the application, or through [http://localhost:8003/graph_plot](http://localhost:8003/graph_plot)
+ as a separate endpoint in the application, or through [http://localhost:8003/graph_plot](http://localhost:8003/graph_plot)
 which is the bokeh server where the app is exposed.
 
 | **Graph plot**               | **Interactive selection**|
 |------------------------------|--------------------------|
 | <img src="../images/similarities.png" width="350" height="350"/> | <img src="../images/interactive_graph.png" width="350" height="350"/>|
 
-If you hover over the nodes, the information bout the series it represents will be displayed
-. Also the nearest neighbours will be highlighted. It s also possible to click the nodes to make
+If you hover over the nodes the information about the series it represents will be displayed, and
+ the nearest neighbours will be highlighted. It is also possible to click the nodes to make
  all the non-selected nodes fade.
-
 
 # Creating visualizations
 
